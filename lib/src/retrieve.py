@@ -152,9 +152,11 @@ def recognize_face(sess,pnet, rnet, onet,feature_array, web_img):
     if web_img == False:
         cap = cv2.VideoCapture(0)
     nameArray = []
+    ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     if web_img == True:
-        frame = cv2.imread("/home/kushal/Projects/Face_Recognition/webcameimg.png")
+        ROOT_DIR = ROOT_DIR[: len(ROOT_DIR) - 3]
+        frame = cv2.imread(ROOT_DIR + "/webcameimg.png")
 
         if  web_img:
             gray = cv2.cvtColor(frame, 0)
