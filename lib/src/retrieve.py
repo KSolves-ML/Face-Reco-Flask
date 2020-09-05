@@ -160,9 +160,9 @@ def recognize_face(sess,pnet, rnet, onet,feature_array, web_img):
 
         if  web_img:
             gray = cv2.cvtColor(frame, 0)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                cap.release()
-                cv2.destroyAllWindows()
+            # if cv2.waitKey(1) & 0xFF == ord('q'):
+            #     cap.release()
+            #     cv2.destroyAllWindows()
             if(gray.size > 0):
                 print(gray.size)
                 response, faces,bboxs = align_face(gray,pnet, rnet, onet)
