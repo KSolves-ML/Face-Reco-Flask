@@ -44,7 +44,7 @@ import time
 import cv2
 import facenet
 
-from src.align import detect_face
+from lib.src.align import detect_face
 from datetime import datetime
 from scipy import ndimage
 from scipy.misc import imsave
