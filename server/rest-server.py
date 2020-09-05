@@ -15,8 +15,8 @@ from tensorflow.python.platform import gfile
 from six import iteritems
 sys.path.append('..')
 import numpy as np
-from lib.src import retrieve
-from lib.src.align import detect_face
+from src import retrieve
+from src.align import detect_face
 import tensorflow as tf
 import pickle
 from tensorflow.python.platform import gfile

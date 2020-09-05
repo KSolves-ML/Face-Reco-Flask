@@ -27,7 +27,7 @@ from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 import argparse
-from lib.src.facenet import load_data,load_img,load_model,to_rgb
+from src.facenet import load_data,load_img,load_model,to_rgb
 #import lfw
 import os
 import sys
@@ -44,7 +44,7 @@ import time
 import cv2
 import facenet
 
-from lib.src.align import detect_face
+from src.align import detect_face
 from datetime import datetime
 from scipy import ndimage
 from scipy.misc import imsave
