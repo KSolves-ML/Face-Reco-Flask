@@ -150,7 +150,7 @@ def recognize_face(sess,pnet, rnet, onet,feature_array, web_img):
     embedding_size = embeddings.get_shape()[1]
 
     if web_img == False:
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(-1)
     nameArray = []
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

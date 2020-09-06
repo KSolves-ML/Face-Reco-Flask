@@ -56,7 +56,7 @@ def main(args):
     frame_rate = 0
     frame_count = 0
 
-    video_capture = cv2.VideoCapture(0)
+    video_capture = cv2.VideoCapture(-1)
     face_recognition = face.Recognition()
     start_time = time.time()
 
