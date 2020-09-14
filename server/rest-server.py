@@ -22,9 +22,15 @@ import pickle
 from tensorflow.python.platform import gfile
 from base64 import b64decode
 from flask_cors import CORS
+import ssl
 import json, re
 from flask_request_params import bind_request_params
 import subprocess
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain('/home/ubuntu/Face-Reco-Latest/Face-Reco-Flask/server/ssl/wild.crt', '/home/ubuntu/Face-Reco-Latest/Face-Reco-Flask/server/ssl/wild.key')
+
 
 app = Flask(__name__, static_url_path = "")
 CORS(app)
@@ -106,7 +112,7 @@ def alignImages():
 
 		with open(ROOT_DIR+"/lib/data/images/train_raw/"+userName+"/"+userName+""+str(i)+".png", "wb") as f:
 			f.write(data)
-	subprocess.call(['sh', '/home/kushal/Projects/Face-Reco-Flask/align_images.sh'])
+	subprocess.call(['sh', ROOT_DIR + '/align_images.sh'])
 	with open(ROOT_DIR + '/extracted_dict.pickle','rb') as f:
 		global feature_array
 		feature_array = pickle.load(f)
@@ -123,7 +129,7 @@ def alignImages():
 
 @app.route('/create_embeddings', methods=['GET', 'POST'])
 def createEmbeddings():
-	subprocess.call(['sh', '/home/kushal/Projects/Face-Reco-Flask/demo.sh'])
+	subprocess.call(['sh', ROOT_DIR+'/demo.sh'])
 
 	result = { 'message': "Embeddings Created Successfully" }
 	response = app.response_class(
@@ -145,4 +151,4 @@ def main():
 
     return render_template("main.html")
 if __name__ == '__main__':
-    app.run(debug = True, host= '0.0.0.0')
+    app.run(debug = True, host= '0.0.0.0', ssl_context = context)

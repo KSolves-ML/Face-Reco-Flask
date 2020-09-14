@@ -5,12 +5,12 @@
 # # remove existing training alignment
 # rm -rf ~/Projects/Face_Recognition/Face-Reco-Flask/lib/data/images/train_aligned
 #
-export PYTHONPATH=~/Projects/Face-Reco-Flask/
+export PYTHONPATH=~/Face-Reco-Latest/Face-Reco-Flask/
 
-python ~/Projects/Face-Reco-Flask/lib/src/align/align_dataset_mtcnn.py ~/Projects/Face-Reco-Flask/lib/data/images/train_raw ~/Projects/Face-Reco-Flask/lib/data/images/train_aligned --image_size 160
+python ~/Face-Reco-Latest/Face-Reco-Flask/lib/src/align/align_dataset_mtcnn.py ~/Face-Reco-Latest/Face-Reco-Flask/lib/data/images/train_raw ~/Projects/Face-Reco-Flask/lib/data/images/train_aligned --image_size 160
 
-export PYTHONPATH=~/Projects/Face-Reco-Flask
-rm -rf ~/home/kushal/Projects/Face-Reco-Flask/extracted_dict.pickle
+export PYTHONPATH=~/Face-Reco-Latest/Face-Reco-Flask
+rm -rf ~/Face-Reco-Latest/Face-Reco-Flask/extracted_dict.pickle
 
 python lib/src/create_face_embeddings.py
 
