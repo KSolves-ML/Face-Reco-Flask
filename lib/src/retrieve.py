@@ -42,7 +42,7 @@ import matplotlib.pyplot as plt
 import scipy.io
 import time
 import cv2
-import facenet
+from lib.src.facenet import facenet
 
 from lib.src.align import detect_face
 from datetime import datetime
