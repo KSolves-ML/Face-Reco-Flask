@@ -27,7 +27,7 @@ from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 import argparse
-from src.facenet import load_data,load_img,load_model,to_rgb
+from lib.src.facenet import load_data,load_img,load_model,to_rgb
 #import lfw
 import os
 import sys
@@ -174,7 +174,7 @@ def recognize_face(sess,pnet, rnet, onet,feature_array, web_img):
                                 feature_vector = sess.run(embeddings, feed_dict=feed_dict)
                                 result, accuracy = identify_person(feature_vector, feature_array,8)
                                 print(accuracy)
-                                print("Balleeee===========", result)
+                                print("Result=============", str(result))
                                 if accuracy < 9:
                                     name = result.split("/")
                                     name = name[len(name) - 2]
@@ -206,7 +206,7 @@ def recognize_face(sess,pnet, rnet, onet,feature_array, web_img):
                                 feature_vector = sess.run(embeddings, feed_dict=feed_dict)
                                 result, accuracy = identify_person(feature_vector, feature_array,8)
                                 print(accuracy)
-                                print("Balleeee===========", result)
+
                                 if accuracy < 9:
                                     name = result.split("/")
                                     name = name[len(name) - 2]

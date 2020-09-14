@@ -47,20 +47,13 @@ def main(args):
 
             # Get the paths for the corresponding images
             ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            paths = []
+            for user_dir in os.listdir(ROOT_DIR + '/data/images/train_aligned/'):
+                print("data===============", str(user_dir[len(user_dir) - 3:]))
+                if user_dir[len(user_dir) - 3:] != "txt":
+                    user_images =  [ROOT_DIR + '/data/images/train_aligned/'+str(user_dir)+'/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/'+str(user_dir)+'/')]
+                    paths = paths + user_images
 
-            kushal =  [ROOT_DIR + '/data/images/train_aligned/Kushal/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Kushal/')]
-            gaurav =  [ROOT_DIR + '/data/images/train_aligned/Gaurav/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Gaurav/')]
-            akansha =  [ROOT_DIR + '/data/images/train_aligned/Akansha/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Akansha/')]
-            shivangi =  [ROOT_DIR + '/data/images/train_aligned/Shivangi/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Shivangi/')]
-            sachin =  [ROOT_DIR + '/data/images/train_aligned/Sachin/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Sachin/')]
-            manish =  [ROOT_DIR + '/data/images/train_aligned/Manish/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Manish/')]
-            atul =  [ROOT_DIR + '/data/images/train_aligned/Atul/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Atul/')]
-            kapil =  [ROOT_DIR + '/data/images/train_aligned/Kapil/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Kapil/')]
-            rakesh =  [ROOT_DIR + '/data/images/train_aligned/Rakesh/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Rakesh/')]
-            mayank =  [ROOT_DIR + '/data/images/train_aligned/Mayank/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Mayank/')]
-            aashish =  [ROOT_DIR + '/data/images/train_aligned/Aashish/' + f for f in os.listdir(ROOT_DIR + '/data/images/train_aligned/Aashish/')]
-
-            paths = kushal+gaurav+akansha+ shivangi+sachin+manish+atul+mayank+rakesh+kapil+aashish
             #np.save("images.npy",paths)
             # Load the model
             facenet.load_model(args.model)
@@ -95,7 +88,7 @@ def parse_arguments(argv):
 
     parser.add_argument('--lfw_batch_size', type=int,
         help='Number of images to process in a batch in the LFW test set.', default=100)
-    parser.add_argument('--model', type=str,default='/home/kushal/Projects/Face_Recognition/models',
+    parser.add_argument('--model', type=str,default='/home/kushal/Projects/Face-Reco-Flask/models',
         help='Could be either a directory containing the meta_file and ckpt_file or a model protobuf (.pb) file')
     parser.add_argument('--image_size', type=int,
         help='Image size (height, width) in pixels.', default=160)

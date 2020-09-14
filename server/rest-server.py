@@ -15,13 +15,16 @@ from tensorflow.python.platform import gfile
 from six import iteritems
 sys.path.append('..')
 import numpy as np
-from src import retrieve
-from src.align import detect_face
+from lib.src import retrieve
+from lib.src.align import detect_face
 import tensorflow as tf
 import pickle
 from tensorflow.python.platform import gfile
 from base64 import b64decode
 from flask_cors import CORS
+import json, re
+from flask_request_params import bind_request_params
+import subprocess
 
 app = Flask(__name__, static_url_path = "")
 CORS(app)
@@ -58,11 +61,55 @@ def face_det():
 
 @app.route('/facerecognition', methods=['GET', 'POST'])
 def face():
-	print("Hiitttttttttttttttttt")
-	header, encoded = request.form["file"].split(",", 1)
-	data = b64decode(encoded)
-	with open("webcameimg.png", "wb") as f:
-		f.write(data)
+        header, encoded = request.form["file"].split(",", 1)
+        data = b64decode(encoded)
+
+        with open("webcameimg.png", "wb") as f:
+                f.write(data)
+
+        name = retrieve.recognize_face(sess_fr,pnet, rnet, onet,feature_array, True)
+        result = { 'name': name }
+        response = app.response_class(
+                response=json.dumps(result),
+                status=200,
+                mimetype='application/json'
+        )
+
+        return response;
+
+
+
+@app.route('/align_images', methods=['GET', 'POST'])
+def alignImages():
+	file1 = request.form["file1"]
+	file2 = request.form["file2"]
+	file3 = request.form["file3"]
+	file4 = request.form["file4"]
+	userName = request.form["userName"]
+
+	path = os.path.join(ROOT_DIR+"/lib/data/images/train_raw", userName)
+	print("Path====================", str(path))
+	if os.path.isdir(path) == False:
+		os.mkdir(path)
+
+	for i in range(1, 5):
+		if i == 1:
+			header, encoded = file1.split(",", 1)
+		elif i == 2:
+			header, encoded = file2.split(",", 1)
+		elif i == 3:
+			header, encoded = file3.split(",", 1)
+		elif i == 4:
+			header, encoded = file4.split(",", 1)
+
+		data = b64decode(encoded)
+
+		with open(ROOT_DIR+"/lib/data/images/train_raw/"+userName+"/"+userName+""+str(i)+".png", "wb") as f:
+			f.write(data)
+	subprocess.call(['sh', '/home/kushal/Projects/Face-Reco-Flask/align_images.sh'])
+	with open(ROOT_DIR + '/extracted_dict.pickle','rb') as f:
+		global feature_array
+		feature_array = pickle.load(f)
 	name = retrieve.recognize_face(sess_fr,pnet, rnet, onet,feature_array, True)
 	print("Name===============", name)
 	result = { 'name': name }
@@ -73,6 +120,20 @@ def face():
 	)
 
 	return response;
+
+@app.route('/create_embeddings', methods=['GET', 'POST'])
+def createEmbeddings():
+	subprocess.call(['sh', '/home/kushal/Projects/Face-Reco-Flask/demo.sh'])
+
+	result = { 'message': "Embeddings Created Successfully" }
+	response = app.response_class(
+		response=json.dumps(result),
+		status=200,
+		mimetype='application/json'
+	)
+
+	return response;
+
 
 #==============================================================================================================================
 #

@@ -6,11 +6,9 @@
 # rm -rf ~/Projects/FACE_RECOGNITION/data/images/train_aligned
 # #
 # python ~/Projects/Face_Recognition/lib/src/align/align_dataset_mtcnn.py ~/Projects/Face_Recognition/data/train_raw ~/Projects/Face_Recognition/data/images/train_aligned --image_size 160
-export PYTHONPATH=~/Projects/Face_Recognition
-#
-python lib/src/create_face_embeddings.py
-#
-python server/rest-server.py
+export PYTHONPATH=~/Projects/Face-Reco-Flask/lib/src
+
+python ~/Projects/Face-Reco-Flask/lib/src/align/align_dataset_mtcnn.py ~/Projects/Face-Reco-Flask/lib/data/images/train_raw ~/Projects/Face-Reco-Flask/lib/data/images/train_aligned --image_size 160
 # # remove existing testing alignment
 # rm -rf ~/Projects/facenet/data/images/test_aligned
 #
